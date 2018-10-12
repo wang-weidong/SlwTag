@@ -1,7 +1,7 @@
 /**
  * https://github.com/wang-weidong/SlwTag
  * 
- * SlwPlugins.SlwTag v1.0 2017.10 by CSS WangWeidong 
+ * SlwPlugins.SlwTag v2.1 2017.10 by CSS WangWeidong 
  * Released under the MIT license
  */
 ;
