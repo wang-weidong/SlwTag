@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>SlwTag demo</title>
+<script type="text/javascript" src="jquery-1.7.min.js"></script>
+<script type="text/javascript" src="../slw.js"></script>
+<script type="text/javascript" src="../slw.complete.min.js"></script>
+<script type="text/javascript" src="../slw.tag.js"></script>
+<link rel="stylesheet" href="../style/tag.css" type="text/css" />
+</head>
+
+<body>
+
+	<div style="margin: 20px">
+		<h1>SlwTag input demo</h1>
+
+		<table class="table table-bordered editTable form-group-sm">
+			<thead>
+				<tr>
+					<th colspan="12">表单</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="firstRow">
+					<td colspan="1" class="col-md-1"></td>
+					<td colspan="1" class="col-md-1"></td>
+					<td colspan="1" class="col-md-1"></td>
+					<td colspan="1" class="col-md-1"></td>
+					<td colspan="1" class="col-md-1"></td>
+					<td colspan="1" class="col-md-1"></td>
+					<td colspan="1" class="col-md-1"></td>
+					<td colspan="1" class="col-md-1"></td>
+					<td colspan="1" class="col-md-1"></td>
+					<td colspan="1" class="col-md-1"></td>
+					<td colspan="1" class="col-md-1"></td>
+					<td colspan="1" class="col-md-1"></td>
+				</tr>
+
+				<tr>
+					<td class="tdLable" colspan="3">不能自定义标签</td>
+					<td colspan="9"><input class="form-control" id="up" type="text" value="" /></td>
+				</tr>
+				<tr>
+					<td class="tdLable" colspan="3">区分大小写，One-Ten数组</td>
+					<td colspan="9"><input class="form-control" id="down" type="text" value="Two,Five,Nine," /></td>
+				</tr>
+
+				<tr>
+					<td class="tdLable" colspan="3">One-Ten Ajax/JSON1</td>
+					<td colspan="9"><input class="form-control" id="ajaxJson1" type="text" value="One" /></td>
+				</tr>
+				<tr>
+					<td class="tdLable" colspan="3">One-Ten Ajax/JSON2</td>
+					<td colspan="9"><input class="form-control" id="ajaxJson2" type="text" value="One" /></td>
+				</tr>
+				<tr>
+					<td class="tdLable" colspan="3">One-Ten Ajax/XML</td>
+					<td colspan="9"><input class="form-control" id="ajaxXml" type="text" value="One" /></td>
+				</tr>
+
+				<tr>
+					<td class="tdLable" colspan="3">首字母C的国家</td>
+					<td colspan="9"><input class="form-control" id="iconlist" value="Cambo" /></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+	<script>
+		$(function() {
+			$('#down').slwTag({
+				'data' : [ 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve' ],
+				ignoreCase : false
+			});
+			
+			$('#up').slwTag({
+				'data' : function() {
+					return [ "张三(zhangsan@qq.com)", "李四(lisi@qq.com)", "王五(wangwu@qq.com)", "赵六(zhaoliu@qq.com)", "孙二(suner@qq.com)" ];
+				},
+				'maxItems' : 0,
+				newTagAllowed : false
+			});
+			$('#ajaxJson1').slwTag({
+				'data' : "data/data.json",
+				'ajaxDataType' : 'json',
+				'ajaxParams' : {
+					'userData1' : 'a',
+					'userData2' : 'b'
+				}
+			});
+			$('#ajaxJson2').slwTag({
+				'data' : "data/data2.json",
+				'ajaxDataType' : 'json',
+				dataFormat : function(item) {
+					item.text = item.label;
+					item.value = item.label;
+				}
+			});
+			
+			$('#ajaxXml').slwTag({
+				'data' : "data/data.xml",
+				'ajaxDataType' : 'xml'
+			});
+			
+			var iconList = function(input) {
+				var world = [ 'Cambodia', 'Cameroon', 'Canada', 'Cape-Verde', 'Cayman-Islands', 'Central-African-Republic', 'Chad', 'Chile', 'China', 'Colombia', 'Commonwealth', 'Comoros', 'Costa-Rica', "Cote-d'Ivoire", 'Croatia', 'Cuba', 'Cyprus', 'Czech-Republic' ];
+				var result = [];
+				
+				$.each(world, function(index, name) {
+					new Image().src = 'data/image/worldFlag/' + name + '.png'; // 预加载图片
+					result.push({
+						'value' : name,
+						'label' : name,
+						'image' : 'data/image/worldFlag/' + name + '.png'
+					});
+				});
+				$(input).slwTag({
+					'data' : result,
+					'listStyle' : 'iconList',
+					'maxHeight' : 200,
+					debug : false
+				});
+			};
+			iconList('#iconlist');
+		});
+	</script>
+</body>
+</html>
